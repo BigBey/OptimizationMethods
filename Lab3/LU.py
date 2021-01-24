@@ -1,5 +1,5 @@
 import numpy as np
-
+import random
 
 def full(N):
     m = np.zeros((N, N))
@@ -7,6 +7,11 @@ def full(N):
         m[i] = [int(var) for var in input().split()]
     return m
 
+def full_pt_3(N):
+    m = [[random.randint(-4, 0) for i in range(N)] for j in range(N)]
+    for i in range(N):
+        m[i][i] = -sum(m[i][:i] + m[i][i+1:])
+    return np.array(m)
 
 class Matrix(object):
 
@@ -91,7 +96,6 @@ class Matrix(object):
         for i in range(self.LU.shape[0]):
            b = np.zeros([self.LU.shape[0], 1])
            b[i, 0] = 1
-           print(b)
            column = self.solve_LU(b)
            if inversed is None:
                inversed = column
@@ -136,5 +140,7 @@ else:
     print(a.get_L() * a.get_U())
     inversed = a.get_inversed()
     print(inversed)
-    print(matrix)
-    print(matrix * inversed)
+    print(matrix.dot(inversed))
+
+matrix_pt_3 = full_pt_3(4)
+print(matrix_pt_3)
